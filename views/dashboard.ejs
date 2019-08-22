@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~bulma-badge/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <title>Interlab - Applications</title>
+</head>
+<body>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-end">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered">Hello, <%= user.username %> <% if (user.beta) { %> <span class="tag is-info">Beta <% }; %></span></h1>
+                <p class="subtitle has-text-centered">Applications</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li class="is-active">
+                            <a href="/dashboard">
+                                <span class="icon is-small"><i class="fas fa-plus"></i></span>
+                                <span>Applications</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard/shared">
+                                <span class="icon is-small"><i class="fas fa-cloud"></i></span>
+                                <span>Shared</span>
+                            </a>
+                        </li>
+                        <% if (user.admin) { %>
+                        <li>
+                            <a href="/dashboard/admin">
+                                <span class="icon is-small"><i class="fas fa-user-shield"></i></span>
+                                <span>Admin</span>
+                            </a>
+                        </li>                 
+                        <% }; %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <% include ./partials/message %>
+    <div class="container has-text-right">
+        <div class="fields is-right">
+            <div class="field is-grouped is-grouped-right">
+                <div class="control">
+                    <h1 class="title has-text-centered"><%= Object.keys(user.applications).length %> / <%= user.maxCenters %></h1>
+                </div>
+                <div class="control">
+                    <button id="createButton" class="button is-success is-right" onclick="createButtonClick()">
+                        <span class="icon">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span>Create</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modalObj">
+    <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Create Application</p>
+                <button onclick="cancel()" class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <form method="POST" id="create-form" action="/api/create">
+                    <div class="fields">
+                        <div class="field">
+                            <label for="" class="label">Name</label>
+                            <div class="control">
+                                <input type="text" placeholder="Application Name" name="name" class="input" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="" class="label">Description</label>
+                            <div class="control">
+                                <textarea class="textarea has-fixed-size" name="desc" placeholder="Application Center Description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <div class="control">
+                                    <script src="//www.google.com/recaptcha/api.js" async defer></script><div class="g-recaptcha" data-sitekey="6Ld4hbIUAAAAAHuV6Ct0katfyY2KO5IHNyU0d2Vq" data-callback="cb"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" type="submit" form="create-form">Create</button>
+                <button class="button" onclick="cancel()">Cancel</button>
+            </footer>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="columns is-multiline">
+            <% Object.keys(user.applications).forEach(function(app) { %>
+                <div class="column is-3">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <h1 class="title is-4"><%= user.applications[app].name %></h1>
+                                <p class="subtitle is-6">
+                                    <%= user.applications[app].desc %> 
+                                </p>
+                                <div class="fields">
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <a href=<%= "/dashboard/application/" + user.applications[app].id %> class="button">View</a>
+                                        </div>
+                                        <div class="control">
+                                            <form action="/api/delete/<%= user.applications[app].id %>" method="post">
+                                                <button type="submit" class="button is-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#'+burger.dataset.target);
+     
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
+<script>
+    //Modal
+    var modalObj = document.getElementById('modalObj')
+
+    var createButtonClick = () => {
+        modalObj.classList.add('is-active')
+    }
+
+    var cancel = () => {
+        modalObj.classList.remove('is-active');
+    }
+</script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>

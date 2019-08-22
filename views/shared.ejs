@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~bulma-badge/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <title>Interlab - Shared</title>
+</head>
+<body>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-end nav-menu">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered">Hello, <%= user.username %> <% if (user.beta) { %> <span class="tag is-info">Beta <% }; %></span></h1>
+                <p class="subtitle has-text-centered">Shared Applications</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li>
+                            <a href="/dashboard">
+                                <span class="icon is-small"><i class="fas fa-plus"></i></span>
+                                <span>Applications</span>
+                            </a>
+                        </li>
+                        <li class="is-active">
+                            <a href="/dashboard/shared">
+                                <span class="icon is-small"><i class="fas fa-cloud"></i></span>
+                                <span>Shared</span>
+                            </a>
+                        </li>
+                        <% if (user.admin) { %>
+                        <li>
+                            <a href="/dashboard/admin">
+                                <span class="icon is-small"><i class="fas fa-user-shield"></i></span>
+                                <span>Admin</span>
+                            </a>
+                        </li>                 
+                        <% }; %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#'+burger.dataset.target);
+     
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>

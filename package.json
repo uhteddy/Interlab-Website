@@ -1,0 +1,40 @@
+{
+  "name": "easyapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "author": "Teddy Hartling",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "bulma": "^0.7.5",
+    "bulma-badge": "^3.0.1",
+    "bulma-dashboard": "^0.1.40",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-rate-limit": "^5.0.0",
+    "express-recaptcha": "^5.0.0",
+    "express-session": "^1.16.2",
+    "express-sitemap": "^1.8.0",
+    "file-system": "^2.2.2",
+    "i": "^0.3.6",
+    "npm": "^6.10.3",
+    "object-array-converter": "^1.0.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "quick.db": "^7.0.0-b22",
+    "secret-key": "^1.4.2",
+    "short-uuid": "^3.1.1",
+    "uuid-apikey": "^1.4.3",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

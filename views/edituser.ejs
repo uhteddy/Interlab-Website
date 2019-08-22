@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~bulma-badge/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-checkradio@1.1.1/dist/css/bulma-checkradio.min.css">
+    <title>Interlab - Admin</title>
+</head>
+<body>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-end nav-menu">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container is-centered">
+                    <h1 class="title has-text-centered "><%= user.username %></h1>
+                <p class="subtitle has-text-centered">Edit</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li>
+                            <a href="/dashboard">
+                                <span class="icon is-small"><i class="fas fa-plus"></i></span>
+                                <span>Applications</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard/shared">
+                                <span class="icon is-small"><i class="fas fa-cloud"></i></span>
+                                <span>Shared</span>
+                            </a>
+                        </li>
+                        <li class="is-active">
+                            <a href="/dashboard/admin">
+                                <span class="icon is-small"><i class="fas fa-user-shield"></i></span>
+                                <span>Admin</span>
+                            </a>
+                        </li>                 
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <div class="container">
+        <form action="/dashboard/admin/<%= user.username %>/edit" method="POST">
+            <div class="form">
+                <div class="columns is-multiline">
+                    <div class="column is-3">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-content">
+                                    <h1 class="title is-5">Max Centers</h1>
+                                    <input type="number" class="input" placeholder="Max Centers" name="maxcenters" value="<%= user.maxCenters %>" required>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="column is-3">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-content">
+                                    <h1 class="title is-5">Max Jobs</h1>
+                                    <input type="number" class="input" name="maxjobs" placeholder="Max Jobs" value="<%= user.maxJobs %>" required>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <% if (admin.username.toLowerCase() == "uhteddy" && user.username.toLowerCase() !== "uhteddy") { %>
+                        <div class="column is-3">
+                            <div class="box">
+                                <article class="media">
+                                    <div class="media-content">
+                                        <h1 class="title is-5">Admin</h1>
+                                        <input class="is-checkradio" name="admin" id="admin" type="checkbox"<% if(user.admin) { %> checked <% }; %>>
+                                        <label for="admin">Admin</label>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    <% }; %>
+                </div>
+                <button type="submit" class="button is-fullwidth is-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#'+burger.dataset.target);
+     
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
+<script>
+    // Modal
+    var Create = document.getElementById();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/dist/js/bulma-extensions.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <title>Interlab</title>
+</head>
+<body>
+    <section class="hero is-primary is-fullheight hero-bkg-animated">
+        <div class="hero-head">
+            <div class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a href="#" class="navbar-item">
+                            <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                        </a>
+                        <span class="navbar-burger burger" data-target="navMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navMenu" class="navbar-menu">
+                        <div class="navbar-end nav-menu">
+                            <span class="navbar-item">
+                                <a href="/auth/signup" class="button is-primary is-outlined is-inverted">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-user-plus"></i>
+                                    </span>
+                                    <span>Sign-Up</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a href="/auth/login" class="button is-primary is-inverted">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span>Login</span>
+                                </a>
+                            </span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="" height="100" width="400">
+                <p class="subtitle">Time to ditch <strong>trello</strong>.</p>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <br>
+        <h1 class="title is-2 has-text-centered">Our Statistics</h1>
+        <br>
+        <div class="columns has-text-centered is-centered">
+            <div class="column is-7">
+                <section class="info-tiles">
+                    <div class="tile is-ancestor has-text-centered">
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <h1 class="title"><%= stats.users %></h1>
+                                <p class="subtitle">Registered Users</p>
+                            </div>
+                        </div>
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <h1 class="title"><%= stats.applications %></h1>
+                                <p class="subtitle">Applications</p>
+                            </div>
+                        </div>
+                        <div class="tile is-parent">
+                            <div class="tile is-child box">
+                                <h1 class="title"><%= stats.responses %></h1>
+                                <p class="subtitle">Responses</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+<script type="text/javascript">
+(function() {
+  var burger = document.querySelector('.burger');
+  var nav = document.querySelector('#'+burger.dataset.target);
+ 
+  burger.addEventListener('click', function(){
+    burger.classList.toggle('is-active');
+    nav.classList.toggle('is-active');
+  });
+})();
+</script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>

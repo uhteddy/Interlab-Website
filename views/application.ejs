@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~bulma-badge/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-pageloader@2.1.0/dist/css/bulma-pageloader.min.css">
+    <title>Interlab - Applications</title>
+</head>
+<body>
+    <div class="pageloader is-active" id="loader"><span class="title">Loading Application</span></div>
+    <script>
+        setTimeout(() => {
+            document.getElementById('loader').toggle('is-active')
+        }, 3)
+    </script>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a href="/dashboard" class="navbar-item">
+                            Dashboard
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                    </div>
+                    <span class="navbar-item">
+                        <form action="/download/application/<%= app.id %>" method="POST">
+                            <button type="submit" id="download" class="button is-white">
+                                <span class="icon is-small">
+                                    <i class="fas fa-download"></i>
+                                </span>
+                                <span>Download</span>
+                            </button >
+                        </form>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered"><%= app.name %></span></h1>
+                <p class="subtitle has-text-centered">Customize</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li class="is-active">
+                            <a href=<%= "/dashboard/application/" + app.id %>>
+                                <span class="icon is-small"><i class="fas fa-palette"></i></span>
+                                <span>Customize</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=<%= "/dashboard/application/" + app.id + "/jobs" %>>
+                                <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
+                                <span>Jobs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=<%= "/dashboard/application/" + app.id + "/responses" %>>
+                                <span class="icon is-small"><i class="fas fa-reply"></i></i></span>
+                                <span>Responses</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <div class="container">
+        <% include ./partials/message %>
+        <form action="/api/save" method="POST">
+            <div class="fields">
+                <div class="field">
+                    <label for="" class="label">Name</label>
+                    <div class="control">
+                        <input type="text" class="input" name="name" value="<%= app.name %>" placeholder="Application Name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="" class="label">Description</label>
+                    <div class="control">
+                        <textarea class="textarea has-fixed-size" name="desc" placeholder="Application Center Description" required><%= app.desc %></textarea>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control has-text-centered">
+                            <label for="" class="label">Backgroud</label>
+                            <input type="color" name="bgcolor" id="bgcolor" value="<%= app['colors'].bgcolor %>">
+                        </div>
+                        <div class="control has-text-centered">
+                            <label for="" class="label">Bottom Bar</label>
+                            <input type="color" name="bottomcolor" id="bottomcolor" value="<%= app['colors'].bottomcolor %>">
+                        </div>
+                        <div class="control has-text-centered">
+                            <label for="" class="label">Top Bar</label>
+                            <input type="color" name="topbarcolor" id="topbarcolor" value="<%= app['colors'].topbarcolor %>">
+                        </div>
+                        <div class="control has-text-centered">
+                            <label for="" class="label">Text Box</label>
+                            <input type="color" name="textboxcolor" id="textboxcolor" value="<%= app['colors'].textboxcolor %>">
+                        </div>
+                        <div class="control has-text-centered">
+                            <label for="" class="label">Text</label>
+                            <input type="color" name="textcolor" id="textcolor" value="<%= app['colors'].textcolor %>">
+                        </div>
+                    </div>
+                    <input type="hidden" id="appId" name="appId" value="<%= app.id %>">
+                    <div class="field">
+                        <button class="button is-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    <br>
+</body>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#'+burger.dataset.target);
+     
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>

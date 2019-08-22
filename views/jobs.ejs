@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~bulma-badge/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <title>Interlab - Applications</title>
+</head>
+<body>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a href="/dashboard" class="navbar-item">
+                            Dashboard
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                        <span class="navbar-item">
+                            <form action="/download/application/<%= app.id %>" method="POST">
+                                <button type="submit" id="download" class="button is-white">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-download"></i>
+                                    </span>
+                                    <span>Download</span>
+                                </button >
+                            </form>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered"><%= app.name %></span></h1>
+                <p class="subtitle has-text-centered">Jobs</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li>
+                            <a href=<%= "/dashboard/application/" + app.id %>>
+                                <span class="icon is-small"><i class="fas fa-palette"></i></span>
+                                <span>Customize</span>
+                            </a>
+                        </li>
+                        <li class="is-active">
+                            <a href=<%= "/dashboard/application/" + app.id + "/jobs" %>>
+                                <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
+                                <span>Jobs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=<%= "/dashboard/application/" + app.id + "/responses" %>>
+                                <span class="icon is-small"><i class="fas fa-reply"></i></i></span>
+                                <span>Responses</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <% include ./partials/message %>
+    <div class="container has-text-right">
+            <div class="fields is-right">
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <h1 class="title has-text-centered"><%= Object.keys(app.jobs).length %> / <%= user.maxJobs %></h1>
+                    </div>
+                    <div class="control">
+                        <button id="createButton" class="button is-success is-right" onclick="createButtonClick()">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modalObj">
+        <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Create Job</p>
+                    <button onclick="cancel()" class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <form method="POST" id="create-form" action="/api/create/job/<%= app.id %>">
+                        <div class="fields">
+                            <div class="field">
+                                <label for="" class="label">Job Name</label>
+                                <div class="control">
+                                    <input type="text" placeholder="Job Name" name="name" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Job Description</label>
+                                <div class="control">
+                                    <textarea class="textarea has-fixed-size" name="desc" placeholder="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia, natus." required></textarea>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <div class="control">
+                                        <script src="//www.google.com/recaptcha/api.js" async defer></script><div class="g-recaptcha" data-sitekey="6Ld4hbIUAAAAAHuV6Ct0katfyY2KO5IHNyU0d2Vq" data-callback="cb"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" type="submit" form="create-form">Create</button>
+                    <button class="button" onclick="cancel()">Cancel</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="columns is-multiline">
+            <% Object.keys(app.jobs).forEach(function(app) { %>
+                <div class="column is-3">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <h1 class="title is-4"><%= jobs[app].name %></h1>
+                                <p class="subtitle is-6">
+                                    <%= jobs[app].desc %> 
+                                </p>
+                                <div class="fields">
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <a href=<%= "/dashboard/application/" + jobs[app].id %> class="button">Edit</a>
+                                        </div>
+                                        <div class="control">
+                                            <form action="/api/delete/job/<%= appid %>/<%= jobs[app].id %>" method="post">
+                                                <button type="submit" class="button is-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#'+burger.dataset.target);
+     
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
+<script>
+    //Modal
+    var modalObj = document.getElementById('modalObj')
+
+    var createButtonClick = () => {
+        modalObj.classList.add('is-active')
+    }
+
+    var cancel = () => {
+        modalObj.classList.remove('is-active');
+    }
+</script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</html>
