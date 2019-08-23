@@ -16,7 +16,8 @@ app.get('/:id', ensureAuthenticated, (req, res) => {
     } else {
         res.render('application', {
             app: application,
-            user: req.user
+            user: req.user,
+            req: req
         })
     }
 })

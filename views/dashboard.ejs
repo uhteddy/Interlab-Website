@@ -139,7 +139,7 @@
                                 <div class="fields">
                                     <div class="field is-grouped">
                                         <div class="control">
-                                            <a href=<%= "/dashboard/application/" + user.applications[app].id %> class="button">View</a>
+                                            <a href="/dashboard/application/<%= user.applications[app].id %>?load=yes" class="button">View</a>
                                         </div>
                                         <div class="control">
                                             <form action="/api/delete/<%= user.applications[app].id %>" method="post">

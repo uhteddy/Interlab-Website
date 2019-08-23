@@ -5,12 +5,12 @@
     <title>Interlab - Applications</title>
 </head>
 <body>
-    <div class="pageloader is-active" id="loader"><span class="title">Loading Application</span></div>
-    <script>
-        setTimeout(() => {
-            document.getElementById('loader').toggle('is-active')
-        }, 3)
-    </script>
+    <% if (req.query.load == "yes") { %>
+        <div class="pageloader is-active" id="loader"><span class="title">Loading Application</span></div>
+        <script>
+            setTimeout(function(){ document.getElementById('loader').classList.remove('is-active'); }, 2000);
+        </script>
+    <% }; %>
     <section class="hero is-small is-primary">
         <div class="navbar">
             <div class="container">
