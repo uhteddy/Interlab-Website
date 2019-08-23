@@ -47,6 +47,8 @@ app.use('/auth', require('./routes/userAuth.js'), rateLimit);
 app.use('/dashboard', require('./routes/dashboard.js'));
 app.use('/api', require('./routes/api.js'), rateLimit);
 app.use('/dashboard/application', require('./routes/application.js'));
-app.use('/download', require('./routes/download.js'))
+app.use('/download', require('./routes/download.js'));
+app.use('/dashboard/:id/job', require('./routes/job.js'))
+
 
 app.listen(3000);
