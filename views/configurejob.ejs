@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+    <title>Interlab - Configure</title>
+</head>
+<body>
+    <section class="hero is-small is-primary">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="/dashboard" class="navbar-item">
+                        <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a href="/dashboard" class="navbar-item">
+                            Dashboard
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        <span class="navbar-item">
+                            <a href="/auth/logout" class="button is-primary is-outlined is-inverted">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Logout</span>
+                            </a>
+                        </span>
+                        <span class="navbar-item">
+                            <form action="/download/application/<%= app.id %>" method="POST">
+                                <button type="submit" id="download" class="button is-white">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-download"></i>
+                                    </span>
+                                    <span>Download</span>
+                                </button >
+                            </form>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered"><%= job.name %></span></h1>
+                <p class="subtitle has-text-centered">Questions</p>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="container">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li>
+                            <a href="/dashboard/application/<%= app.id %>/job/<% job.id %>" + app.id %>>
+                                <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
+                                <span>Questions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard/application/<%= app.id %>/<%= app.id %>/responses">
+                                <span class="icon is-small"><i class="fas fa-reply"></i></i></span>
+                                <span>Responses <span class="tag"><% Object.keys(job.responses).length || 0 %></span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

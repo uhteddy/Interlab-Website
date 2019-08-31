@@ -161,7 +161,8 @@ app.post('/create/job/:id', ensureAuthenticated, (req, res) => {
                 name: name,
                 desc: desc,
                 id: jobid,
-                questions: {}
+                questions: {},
+                responses: {}
             });
             req.flash('success', 'Successfully created job!');
             res.redirect('/dashboard/application/' + appid + '/jobs');

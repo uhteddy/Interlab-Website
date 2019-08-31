@@ -47,9 +47,17 @@ app.get('/:id/job/:jobid', ensureAuthenticated, (req, res) => {
     var appId = req.params.id
     var jobId = req.params.jobid
 
-    var job = getApplication(req.user.username, appId);
-    if (job) {
-
+    var app = getApplication(req.user.username, appId);
+    if (app) {
+        if (app.jobs[jobId]) {
+            res.render('configurejob', {
+                app: app,
+                job: db.get(`users.${req.user.username.toLowerCase()}.applications.${appId}.jobs.${jobId}`) 
+            })
+        } else {
+            req.flash('error', `We couldn't find that Job.`);
+            res.redirect(`/dashboard/application/${jobId}/jobs`)
+        } 
     } else {
         req.flash('error', `We couldn't find that Job.`);
         res.redirect(`/dashboard/application/${jobId}/jobs`)
