@@ -43,7 +43,7 @@ app.get('/:id/jobs', ensureAuthenticated, (req, res) => {
 
 // Job
 
-app.get('/:id/job/:jobid', ensureAuthenticated, (req, res) => {
+app.get('/:id/job/:jobid/questions', ensureAuthenticated, (req, res) => {
     var appId = req.params.id
     var jobId = req.params.jobid
 

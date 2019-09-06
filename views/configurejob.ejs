@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>
-    <title>Interlab - Configure</title>
+    <% include ./partials/head %>    
+    <title>Interlab - Questions</title>
 </head>
 <body>
     <section class="hero is-small is-primary">
@@ -65,8 +65,7 @@
                         </li>
                         <li>
                             <a href="/dashboard/application/<%= app.id %>/<%= app.id %>/responses">
-                                <span class="icon is-small"><i class="fas fa-reply"></i></i></span>
-                                <span>Responses <span class="tag"><% Object.keys(job.responses).length || 0 %></span></span>
+                                Responses
                             </a>
                         </li>
                     </ul>
