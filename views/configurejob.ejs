@@ -57,7 +57,7 @@
             <div class="container">
                 <div class="tabs is-boxed">
                     <ul>
-                        <li>
+                        <li class="is-active">
                             <a href="/dashboard/application/<%= app.id %>/job/<% job.id %>" + app.id %>>
                                 <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
                                 <span>Questions</span>
@@ -65,7 +65,8 @@
                         </li>
                         <li>
                             <a href="/dashboard/application/<%= app.id %>/<%= app.id %>/responses">
-                                Responses
+                                <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                                <span>Responses</span>
                             </a>
                         </li>
                     </ul>
