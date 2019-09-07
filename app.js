@@ -7,13 +7,17 @@ const flash = require('express-flash');
 const passport = require('passport');
 const db = require('quick.db');
 const rateLimit = require("express-rate-limit");
-9 
+const path = require('path')
+
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // limit each IP to 100 requests per windowMs
 });
 
 const app = express();
+
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -41,6 +45,10 @@ app.get('/', ensureNotAuthenticate, (req, res) => {
 
 app.get('/403', (req, res) => {
     res.render('forbidden');
+})
+
+app.get('/sandbox', (req, res) => {
+    res.render('sandbox')
 })
 
 app.use('/auth', require('./routes/userAuth.js'), rateLimit);

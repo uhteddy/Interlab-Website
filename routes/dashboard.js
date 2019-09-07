@@ -72,6 +72,11 @@ app.post('/admin/:username/edit', [ensureAdmin, ensureAuthenticated], (req, res)
         req.flash('error', 'User not found');
         res.redirect('/dashboard/admin');
     }
-})
+});
+
+app.post('/admin/:username/delete', [ensureAdmin, ensureAuthenticated], (req, res) => {
+    var lowerUsername = req.params.username.toLowerCase()
+    var dbPath = `users.${lowerUsername}`
+});
 
 module.exports = app;

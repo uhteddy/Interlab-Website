@@ -105,20 +105,24 @@
                         <form method="POST" id="create-form" action="/api/create/job/<%= app.id %>">
                             <div class="fields">
                                 <div class="field">
+                                    <div class="control">
+                                        <label for="" class="label">Question Name</label>
+                                        <input type="text" class="input" placeholder="Question Name">
+                                    </div>
+                                </div>
+                                <div class="field">
                                     <label for="" class="label">Type</label>
                                     <div class="control">
-                                        <div class="select is-info" id="select">
-                                            <select name="Type" id="">
+                                        <div class="select is-info">
+                                            <select name="type" id="select">
                                                 <option value="tr">Text Response</option>
                                                 <option value="mc">Multiple Choice</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <label for="" class="label">Job Description</label>
+                                <div class="field" id="inputforquestion">
                                     <div class="control">
-                                        <textarea class="textarea has-fixed-size" name="desc" placeholder="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia, natus." required></textarea>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -153,7 +157,16 @@
     }
 
     $('select').on('change', function() {
-        alert( this.value );
+        if (this.value == "mc") {
+            document.getElementById("inputforquestion").innerHTML = `                                   
+            <label for="" class="label">Choices</label>
+            <div class="control">
+                <input class="input" type="tags" placeholder="Add Tag" value="Tag1,Tag2,Tag3">
+            </div>`
+            bulmaTagsinput.attach();
+        } else {
+            document.getElementById("inputforquestion").innerHTML = ''
+        }
     });
 </script>
 </html>
