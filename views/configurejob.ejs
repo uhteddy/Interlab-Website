@@ -75,6 +75,25 @@
         </div>
     </section>
     <br>
+    <% include ./partials/message %>
+    <div class="container has-text-right">
+            <div class="fields is-right">
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <h1 class="title has-text-centered"><%= Object.keys(app.jobs).length %> / <%= user.maxQuestions %></h1>
+                    </div>
+                    <div class="control">
+                        <button id="createButton" class="button is-success is-right" onclick="createButtonClick()">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <% include ./partials/footer %>
 </body>
 </html>

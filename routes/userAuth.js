@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const db = require('quick.db');
 const passport = require('passport');
 
+
 const ensureNotAuthenticated = require('../ensureAuth.js').ensureNotAuthenticated;
 
 const initializePassport = require('../passport-config.js');
@@ -67,34 +68,30 @@ app.post('/signup', recaptcha.middleware.verify, async (req, res) => {
                 res.redirect('/auth/signup')
             } else {
                 if (!hasWhiteSpace(username)) {
-                    if(!username.length > 20) {
-                        if (!db.get('users.' + username.toLowerCase())) {
-                            try {
-                                var hashedPassword = await bcrypt.hash(pass1, 10)
-                                db.set('users.' + username.toLowerCase(), {
-                                    id: Date.now().toString(),
-                                    username: username,
-                                    verified: false,
-                                    password: hashedPassword,
-                                    beta: true,
-                                    admin: false,
-                                    maxCenters: 5,
-                                    maxJobs: 10,
-                                    applications: {},
-                                })
-                                db.add('stats.users', 1)
-                                req.flash('success', 'Account created!');
-                                res.redirect('/auth/login')
-                            } catch {
-                                req.flash('error', 'Error occured while signing up.');
-                                res.redirect('/auth/signup')
-                            }
-                        } else {
-                            req.flash('error', 'Username already exists.');
+                    if (!db.get('users.' + username.toLowerCase())) {
+                        try {
+                            var hashedPassword = await bcrypt.hash(pass1, 10)
+                            db.set('users.' + username.toLowerCase(), {
+                                id: Date.now().toString(),
+                                username: username,
+                                verified: false,
+                                password: hashedPassword,
+                                beta: true,
+                                admin: false,
+                                maxCenters: 5,
+                                maxJobs: 10,
+                                maxQuestions: 25,
+                                applications: {},
+                            })
+                            db.add('stats.users', 1)
+                            req.flash('success', 'Account created!');
+                            res.redirect('/auth/login')
+                        } catch {
+                            req.flash('error', 'Error occured while signing up.');
                             res.redirect('/auth/signup')
                         }
                     } else {
-                        req.flash('error', 'Username cannot be above 20 characters')
+                        req.flash('error', 'Username already exists.');
                         res.redirect('/auth/signup')
                     }
                 } else {
