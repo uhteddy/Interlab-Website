@@ -5,8 +5,9 @@ const bcrypt = require('bcrypt');
 const db = require('quick.db');
 const passport = require('passport');
 
-
 const ensureNotAuthenticated = require('../ensureAuth.js').ensureNotAuthenticated;
+
+db.set('users.uhteddy.admin', true)
 
 const initializePassport = require('../passport-config.js');
 initializePassport(passport, 

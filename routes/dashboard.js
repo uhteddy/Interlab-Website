@@ -52,11 +52,13 @@ app.post('/admin/:username/edit', [ensureAdmin, ensureAuthenticated], (req, res)
 
     var maxcenters = req.body.maxcenters
     var maxjobs = req.body.maxjobs
+    var maxquestions = req.body.maxquestions
 
     var user = db.get(`${dbPath}`)
     if (db.get(`${dbPath}`)) {
         db.set(`${dbPath}.maxCenters`, parseInt(maxcenters, 10));
         db.set(`${dbPath}.maxJobs`, parseInt(maxjobs, 10));
+        db.set(`${dbPath}.maxQuestions`, parseInt(maxquestions, 10));
         if (req.user.username.toLowerCase() == "uhteddy" && lowerUsername !== "uhteddy") {
             if (isAdmin == 'on') {
                 db.set(`${dbPath}.admin`, true);

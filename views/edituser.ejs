@@ -91,6 +91,16 @@
                             </article>
                         </div>
                     </div>
+                    <div class="column is-3">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-content">
+                                    <h1 class="title is-5">Max Questions</h1>
+                                    <input type="number" class="input" name="maxquestions" placeholder="Max Questions" value="<%= user.maxQuestions %>" required>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                     <% if (admin.username.toLowerCase() == "uhteddy" && user.username.toLowerCase() !== "uhteddy") { %>
                         <div class="column is-3">
                             <div class="box">
