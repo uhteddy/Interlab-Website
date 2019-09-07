@@ -52,7 +52,8 @@ app.get('/:id/job/:jobid/questions', ensureAuthenticated, (req, res) => {
         if (app.jobs[jobId]) {
             res.render('configurejob', {
                 app: app,
-                job: db.get(`users.${req.user.username.toLowerCase()}.applications.${appId}.jobs.${jobId}`) 
+                job: db.get(`users.${req.user.username.toLowerCase()}.applications.${appId}.jobs.${jobId}`),
+                user: req.user
             })
         } else {
             req.flash('error', `We couldn't find that Job.`);

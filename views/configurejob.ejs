@@ -94,6 +94,66 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="modalObj">
+            <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Create Question</p>
+                        <button onclick="cancel()" class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form method="POST" id="create-form" action="/api/create/job/<%= app.id %>">
+                            <div class="fields">
+                                <div class="field">
+                                    <label for="" class="label">Type</label>
+                                    <div class="control">
+                                        <div class="select is-info" id="select">
+                                            <select name="Type" id="">
+                                                <option value="tr">Text Response</option>
+                                                <option value="mc">Multiple Choice</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label">Job Description</label>
+                                    <div class="control">
+                                        <textarea class="textarea has-fixed-size" name="desc" placeholder="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia, natus." required></textarea>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="control">
+                                            <script src="//www.google.com/recaptcha/api.js" async defer></script><div class="g-recaptcha" data-sitekey="6Ld4hbIUAAAAAHuV6Ct0katfyY2KO5IHNyU0d2Vq" data-callback="cb"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" type="submit" form="create-form">Create</button>
+                        <button class="button" onclick="cancel()">Cancel</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
     <% include ./partials/footer %>
 </body>
+<script>
+    //Modal
+    var modalObj = document.getElementById('modalObj')
+
+    var createButtonClick = () => {
+        modalObj.classList.add('is-active')
+    }
+
+    var cancel = () => {
+        modalObj.classList.remove('is-active');
+    }
+
+    $('select').on('change', function() {
+        alert( this.value );
+    });
+</script>
 </html>
