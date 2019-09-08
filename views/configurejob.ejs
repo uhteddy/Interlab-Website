@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>    
+    <% include ./partials/head %>  
+    <script src="https://cdn.jsdelivr.net/npm/bulma-tagsinput@2.0.0/dist/js/bulma-tagsinput.min.js"></script>  
     <title>Interlab - Questions</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
                     <a href="/dashboard" class="navbar-item">
                         <img src="https://cdn.discordapp.com/attachments/477303086935965701/609967810701164544/logo.svg" alt="interlab logo">
                     </a>
-                    <span class="navbar-burger burger" data-target="navMenu">
+                    <span class="navbar-burger burger is-white" data-target="navMenu">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -66,7 +67,7 @@
                         <li>
                             <a href="/dashboard/application/<%= app.id %>/<%= app.id %>/responses">
                                 <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                                <span>Responses</span>
+                                <span class="has-badge-rounded has-badge-white has-badge-inline" data-badge="<%= Object.keys(job.responses).length %>">Responses</span>
                             </a>
                         </li>
                     </ul>
@@ -160,9 +161,7 @@
         if (this.value == "mc") {
             document.getElementById("inputforquestion").innerHTML = `                                   
             <label for="" class="label">Choices</label>
-            <div class="control">
-                <input class="input" type="tags" placeholder="Add Tag" value="Tag1,Tag2,Tag3">
-            </div>`
+            <input class="input" type="tags" placeholder="Add Response" value="">`
             bulmaTagsinput.attach();
         } else {
             document.getElementById("inputforquestion").innerHTML = ''

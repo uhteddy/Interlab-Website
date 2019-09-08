@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>  
+    <% include ./partials/head %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-badge@3.0.1/dist/css/bulma-badge.min.css">
     <title>Interlab - Sandbox</title>
 </head>
 <body>
-        <input class="input" type="tags" placeholder="Add Tag" value="Tag1,Tag2,Tag3">
+<div class="columns">
+        <div class="column">
+            <span class="has-badge-rounded has-badge-success has-badge-small" data-badge="10">
+            Small badge
+            </span>
+        </div>
+        <div class="column">
+            <span class="has-badge-rounded has-badge-success" data-badge="10">
+            Normal badge
+            </span>
+        </div>
+        <div class="column">
+            <span class="has-badge-rounded has-badge-warning has-badge-medium" data-badge="10">
+            Medium badge
+            </span>
+        </div>
+        <div class="column">
+            <span class="has-badge-rounded has-badge-danger has-badge-large" data-badge="10">
+            Large badge
+            </span>
+        </div>
+        </div>
 </body>
 </html>

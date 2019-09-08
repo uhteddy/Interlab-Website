@@ -63,10 +63,21 @@
                                 <span>Customize</span>
                             </a>
                         </li>
+                        <% var num = 0 %>
+                        <% Object.keys(app.jobs).forEach(element => { %>
+                            <% try { %>
+                                <% var jobnum = Object.keys(element) %>
+                                <% if (jobnum !== 0) { %>
+                                    <% Object.keys(element.responses).forEach(response => { %>
+                                        <% num =+ 1 %>
+                                    <% }) %>
+                                <% }; %>
+                            <% } catch {} %>
+                        <% }); %>
                         <li class="is-active">
                             <a href=<%= "/dashboard/application/" + app.id + "/jobs" %>>
                                 <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
-                                <span>Jobs</span>
+                                <span class="has-badge-rounded has-badge-primary has-badge-inline" data-badge="<%= num %>">Jobs&nbsp;</span>
                             </a>
                         </li>
                     </ul>
@@ -148,7 +159,7 @@
                                 <div class="fields">
                                     <div class="field is-grouped">
                                         <div class="control">
-                                            <a href="/dashboard/application/<%= appid %>/job/<%= jobs[app].id %>/questions" class="button">Edit</a>
+                                            <a href="/dashboard/application/<%= appid %>/job/<%= jobs[app].id %>/questions" class="button has-badge-rounded has-badge-info" data-badge="<%= Object.keys(jobs[app].responses).length %>">View</a>
                                         </div>
                                         <div class="control">
                                             <form action="/api/delete/job/<%= appid %>/<%= jobs[app].id %>" method="post">
