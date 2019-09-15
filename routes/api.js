@@ -124,7 +124,7 @@ app.post('/save', ensureAuthenticated, (req, res) => {
 
 
 // Job API
-app.post('/delete/job/:appid/:id', [ensureAuthenticated, recaptcha.middleware.verify], (req, res) => {
+app.post('/delete/job/:appid/:id', ensureAuthenticated, (req, res) => {
     var appid = req.params.appid;
     var id = req.params.id;
 
@@ -146,7 +146,7 @@ app.post('/delete/job/:appid/:id', [ensureAuthenticated, recaptcha.middleware.ve
     }
 })
 
-app.post('/create/job/:id', ensureAuthenticated, (req, res) => {
+app.post('/create/job/:id', [ensureAuthenticated, recaptcha.middleware.verify], (req, res) => {
     var name = req.body.name || ""
     var desc = req.body.desc || ""
 
@@ -155,7 +155,7 @@ app.post('/create/job/:id', ensureAuthenticated, (req, res) => {
     var application = db.get(`users.${req.user.username.toLowerCase()}.applications.${appid}`)
 
     if (application) {
-        if (Object.keys(db.get(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs`)) < req.user.maxJobs) {
+        if (Object.keys(db.get(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs`)).length < req.user.maxJobs) {
             var jobid = short.generate();
             db.set(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs.${jobid}`, {
                 name: name,
@@ -199,6 +199,47 @@ app.get('/getinfo/:userid/:applicationid/:apikey', (req, res) => {
             }
         }
     });
+});
+
+// Questions
+
+app.post('/create/question/:id/:jobid', [ensureAuthenticated, recaptcha.middleware.verify], (req, res) => {
+    if (!req.recaptcha.error) {
+        var name = req.body.name || "";
+        var type = req.body.type || "";
+        var choices = req.body.tags || "no";
+
+        var appid = req.params.id;
+        var jobid = req.params.jobid;
+
+        var redirectLink = `/dashboard/application/${appid}/job/${jobid}/questions`;
+
+        var Job = db.get(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs.${jobid}`);
+
+        if (Job) {
+            var questionId = short.generate();
+
+            try {
+                db.set(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs.${jobid}.questions.${questionId}`, {
+                    question: name,
+                    type: type,
+                    id: questionId,
+                    choices: choices
+                })
+                req.flash('success', 'Successfully created the job!');
+                res.redirect(redirectLink);   
+            } catch {
+                req.flash('error', 'An error occured while trying to create question');
+                res.redirect(redirectLink);               
+            }
+        } else {
+            req.flash('error', 'We could not find a job to add that question to.');
+            res.redirect(redirectLink);
+        }
+    } else {
+        req.flash('error', 'Please fill out the captcha');
+        res.redirect(redirectLink)       
+    }
 })
 
 module.exports = app;

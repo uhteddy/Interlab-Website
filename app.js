@@ -8,6 +8,7 @@ const passport = require('passport');
 const db = require('quick.db');
 const rateLimit = require("express-rate-limit");
 const path = require('path')
+const expAutoSan = require('express-autosanitizer');
 
 
 const limiter = rateLimit({
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 app.use(cookieParser());
 app.use(flash())
+app.use(expAutoSan.all);
 app.use(session({
     secret: "cat dog hate me",
     resave: false,

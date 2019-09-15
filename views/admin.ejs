@@ -94,7 +94,7 @@
                         <td><%= users[user].id %></td>
                         <td><a class="button is-info" href="/dashboard/admin/<%= users[user].username %>">Edit</a></td>
                         <% if (!users[user].admin) { %>
-                            <form action="/dashboard/admin/users[user].username/delete" method="post">
+                            <form action="/dashboard/admin/<%= users[user].username %>/delete" method="post">
                                 <td><button class="button is-danger" type="submit">Terminate</button></td>
                             </form>
                         <% } else { %>

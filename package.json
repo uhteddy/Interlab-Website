@@ -17,6 +17,7 @@
     "cookie-parser": "^1.4.4",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
+    "express-autosanitizer": "^1.0.1",
     "express-flash": "0.0.2",
     "express-rate-limit": "^5.0.0",
     "express-recaptcha": "^5.0.0",

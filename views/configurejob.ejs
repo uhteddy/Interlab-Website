@@ -81,7 +81,7 @@
             <div class="fields is-right">
                 <div class="field is-grouped is-grouped-right">
                     <div class="control">
-                        <h1 class="title has-text-centered"><%= Object.keys(app.jobs).length %> / <%= user.maxQuestions %></h1>
+                        <h1 class="title has-text-centered"><%= Object.keys(job.questions).length %> / <%= user.maxQuestions %></h1>
                     </div>
                     <div class="control">
                         <button id="createButton" class="button is-success is-right" onclick="createButtonClick()">
@@ -95,6 +95,33 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="columns is-multiline">
+            <% Object.keys(job.questions).forEach(function(app) { %>
+                <div class="column is-3">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <h1 class="title is-4"><%= job.questions[app].question %></h1>
+                                <div class="fields">
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <a href="#" class="button">Edit</a>
+                                        </div>
+                                        <div class="control">
+                                            <form action="/api/delete/<%= job.questions[app].id %>" method="post">
+                                                <button type="submit" class="button is-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
     <div class="modal" id="modalObj">
             <div class="modal-background"></div>
                 <div class="modal-card">
@@ -103,19 +130,19 @@
                         <button onclick="cancel()" class="delete" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
-                        <form method="POST" id="create-form" action="/api/create/job/<%= app.id %>">
+                        <form method="POST" id="create-form" action="/api/create/question/<%= app.id %>/<%= job.id %>">
                             <div class="fields">
                                 <div class="field">
                                     <div class="control">
                                         <label for="" class="label">Question Name</label>
-                                        <input type="text" class="input" placeholder="Question Name">
+                                        <input type="text" class="input" name="name" placeholder="Question Name">
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label for="" class="label">Type</label>
                                     <div class="control">
                                         <div class="select is-info">
-                                            <select name="type" id="select">
+                                            <select name="type" name="type" id="select">
                                                 <option value="tr">Text Response</option>
                                                 <option value="mc">Multiple Choice</option>
                                             </select>
@@ -161,7 +188,8 @@
         if (this.value == "mc") {
             document.getElementById("inputforquestion").innerHTML = `                                   
             <label for="" class="label">Choices</label>
-            <input class="input" type="tags" placeholder="Add Response" value="">`
+            <input class="input" name="tags" type="tags" placeholder="Add Response" value="">
+            <br>`
             bulmaTagsinput.attach();
         } else {
             document.getElementById("inputforquestion").innerHTML = ''

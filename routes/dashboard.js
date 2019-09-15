@@ -77,6 +77,14 @@ app.post('/admin/:username/edit', [ensureAdmin, ensureAuthenticated], (req, res)
 app.post('/admin/:username/delete', [ensureAdmin, ensureAuthenticated], (req, res) => {
     var lowerUsername = req.params.username.toLowerCase()
     var dbPath = `users.${lowerUsername}`
+    
+    var user = db.get(dbPath);
+
+    if(req.user.username == "uhteddy" || !user.admin) {
+        db.delete(dbPath);
+        req.flash('success', 'Successfully terminated ' + req.params.username)
+        res.redirect('/dashboard/admin')
+    }
 });
 
 module.exports = app;
