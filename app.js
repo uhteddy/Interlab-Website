@@ -9,6 +9,22 @@ const db = require('quick.db');
 const rateLimit = require("express-rate-limit");
 const path = require('path')
 const expAutoSan = require('express-autosanitizer');
+const localtunnel = require('localtunnel');
+
+// Discord Bot Initialization
+require('./bot/index').init();
+
+(async () => {
+  const tunnel = await localtunnel({ port: 3000, subdomain: 'interlab' });
+
+  // the assigned public url for your tunnel
+  // i.e. https://abcdefgjhij.localtunnel.me
+  tunnel.url;
+
+  tunnel.on('close', () => {
+    // tunnels are closed
+  });
+})();
 
 
 const limiter = rateLimit({
@@ -49,8 +65,8 @@ app.get('/403', (req, res) => {
     res.render('forbidden');
 })
 
-app.get('/sandbox', (req, res) => {
-    res.render('sandbox')
+app.get('/tos', (req, res) => {
+    res.render('tos')
 })
 
 app.use('/auth', require('./routes/userAuth.js'), rateLimit);

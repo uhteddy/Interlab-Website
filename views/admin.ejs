@@ -94,9 +94,7 @@
                         <td><%= users[user].id %></td>
                         <td><a class="button is-info" href="/dashboard/admin/<%= users[user].username %>">Edit</a></td>
                         <% if (!users[user].admin) { %>
-                            <form action="/dashboard/admin/<%= users[user].username %>/delete" method="post">
-                                <td><button class="button is-danger" type="submit">Terminate</button></td>
-                            </form>
+                            <td><button data-username="<%= users[user].username %>" id="term" class="button is-danger term" type="submit">Terminate</button></td>
                         <% } else { %>
                             <td>N/A</td>
                         <% }; %>
@@ -118,9 +116,34 @@
       });
     })();
 </script>
+<% include ./partials/talk %>
 <script>
     // Modal
     var Create = document.getElementById();
+</script>
+<script>
+$('.term').on('click', function() {
+    var username = $( this ).data('username')
+    $.confirm({
+        title: "Delete " + username,
+        text: "Are you sure that you want to delete this user?",
+        columnClass: 'small',
+        buttons: {
+            Confirm: {
+                text: "Delete",
+                btnClass: "is-red",
+                action: () => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", '/api/admin/' + username + '/delete', true);
+                    xhr.send(); 
+                }
+            },
+            Cancel: {
+                text: "Cancel"
+            }
+        }
+    });
+});
 </script>
 <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </html>

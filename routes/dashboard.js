@@ -4,6 +4,7 @@ const db = require('quick.db');
 
 const ensureAuthenticated = require('../ensureAuth.js').ensureAuthenticated;
 const ensureAdmin = require('../ensureAuth.js').ensureAdmin;
+const sendMessage = require('../bot/functions/sendMessage').fn;
 
 app.get('/', ensureAuthenticated, (req, res) => {
     res.render('dashboard', {
@@ -82,6 +83,7 @@ app.post('/admin/:username/delete', [ensureAdmin, ensureAuthenticated], (req, re
 
     if(req.user.username == "uhteddy" || !user.admin) {
         db.delete(dbPath);
+        sendMessage("623307103532220426", "#ff0000", "User Deleted", "Website Administrator **" + req.user.username + "** has Terminated **" + req.params.username + "**.");``
         req.flash('success', 'Successfully terminated ' + req.params.username)
         res.redirect('/dashboard/admin')
     }
