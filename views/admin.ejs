@@ -70,6 +70,21 @@
     <br>
     <div class="container">
         <% include ./partials/message %>
+        <h1 class="subtitle">Discord Server Announcement</h1>
+        <form action="/dashboard/admin/announce" method="post">
+            <div class="field">
+                <div class="control is-expanded">
+                    <textarea name="message" class="textarea has-fixed-size" placeholder="Announcement Here"></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Send</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <h1 class="subtitle">Users</h1>
         <div class="table-container">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
@@ -103,6 +118,7 @@
             </table>
         </div>
     </div>
+    <br>
     <% include ./partials/footer %>
 </body>
 <script type="text/javascript">
@@ -125,17 +141,16 @@
 $('.term').on('click', function() {
     var username = $( this ).data('username')
     $.confirm({
-        title: "Delete " + username,
-        text: "Are you sure that you want to delete this user?",
-        columnClass: 'small',
+        title: 'Terminate ' + username,
+        content: 'Are you sure that you want to Terminate this user?',
         buttons: {
-            Confirm: {
-                text: "Delete",
-                btnClass: "is-red",
-                action: () => {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", '/api/admin/' + username + '/delete', true);
-                    xhr.send(); 
+            Delete: {
+                text: 'Terminate',
+                btnClass: 'btn-red',
+                keys: ['enter', 'shift'],
+                action: function(){
+                    $.post('/dashboard/admin/' + username + '/delete');
+                    location.reload();
                 }
             },
             Cancel: {

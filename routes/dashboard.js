@@ -63,12 +63,15 @@ app.post('/admin/:username/edit', [ensureAdmin, ensureAuthenticated], (req, res)
         if (req.user.username.toLowerCase() == "uhteddy" && lowerUsername !== "uhteddy") {
             if (isAdmin == 'on') {
                 db.set(`${dbPath}.admin`, true);
+                sendMessage("623307103532220426", "#fff200", "Admin Alert", "**" + req.params.username + "** has recieved Website administration Permissions.");
             } else {
                 db.set(`${dbPath}.admin`, false);
+                sendMessage("623307103532220426", "#fff200", "Admin Alert", "**" + req.params.username + "** has had their admin permissions revoked.");
             }
         }
         req.flash('success', 'Successfully saved!');
-        res.redirect('/dashboard/admin')
+        res.redirect('/dashboard/admin');
+        sendMessage("623307103532220426", "#00ff00", "User Updated", "Website Administrator **" + req.user.username + "** has Updated **" + req.params.username + "**.");
     } else {
         req.flash('error', 'User not found');
         res.redirect('/dashboard/admin');
@@ -83,10 +86,20 @@ app.post('/admin/:username/delete', [ensureAdmin, ensureAuthenticated], (req, re
 
     if(req.user.username == "uhteddy" || !user.admin) {
         db.delete(dbPath);
-        sendMessage("623307103532220426", "#ff0000", "User Deleted", "Website Administrator **" + req.user.username + "** has Terminated **" + req.params.username + "**.");``
-        req.flash('success', 'Successfully terminated ' + req.params.username)
-        res.redirect('/dashboard/admin')
+        db.subtract('stats.users', 1);
+        req.flash('success', 'Successfully terminated ' + req.params.username);
+        res.redirect('/dashboard/admin');
+        sendMessage("623307103532220426", "#ff0000", "User Deleted", "Website Administrator **" + req.user.username + "** has Terminated **" + req.params.username + "**.");
     }
 });
+
+app.post('/admin/announce', [ensureAuthenticated, ensureAdmin], (req, res) => {
+    var body = req.body;
+    var message = body.message;
+
+    sendMessage("610139855770615841", "#00D1B2", "Announcement", message + "\n\nsent by: **" + req.user.username + "**")
+    req.flash('success', 'Successfully announced in server!');
+    res.redirect('/dashboard/admin');
+})
 
 module.exports = app;
