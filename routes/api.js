@@ -35,7 +35,6 @@ app.post('/create', [ensureAuthenticated, recaptcha.middleware.verify], (req, re
                     textcolor: "#ffffff"
                 },
                 jobs: {},
-                responses: {}
             })
             db.add('stats.applications', 1)
             req.flash('success', 'Successfully created application!');
@@ -75,7 +74,6 @@ app.post('/save', ensureAuthenticated, (req, res) => {
     var textcolor = req.body.textcolor || "#ffffff";
 
     var appId =  req.body.appId;
-    var app = db.get(`users.${req.user.username.toLowerCase()}.applications.${appId}`);
 
     var app = db.get(`users.${req.user.username.toLowerCase()}.applications.${appId}`);
 
@@ -83,7 +81,7 @@ app.post('/save', ensureAuthenticated, (req, res) => {
         name: name,
         desc: desc,
         id: app.id,
-        apikey: app.apiKey,
+        apikey: app.apikey,
         colors: {
             bgcolor: bgcolor,
             bottomcolor: bottomcolor,
@@ -103,7 +101,7 @@ app.post('/save', ensureAuthenticated, (req, res) => {
             name: name,
             desc: desc,
             id: app.id,
-            apikey: app.apiKey,
+            apikey: app.apikey,
             colors: {
                 bgcolor: bgcolor,
                 bottomcolor: bottomcolor,
@@ -176,26 +174,26 @@ app.post('/create/job/:id', [ensureAuthenticated, recaptcha.middleware.verify], 
     }
 });
 
-
 // 3rd party API
 app.get('/getinfo/:userid/:applicationid/:apikey', (req, res) => {
-    var userid = req.param.userid
-    var applicationid = req.param.applicationid
-    var apikey = req.param.apikey
-    var Users = db.get('users')
+    var userid = req.params.userid
+    var applicationid = req.params.applicationid
+    var apikey = req.params.apikey
 
+    var Users = db.get('users')
+    
     Object.keys(Users).forEach(element => {
         if (Users[element].id == userid) {
-            var application = Users[element].applications.applicationid
+            var application = Users[element].applications[applicationid.toString()]
             if (application) {
                 if (application.apikey == apikey) {
-                    application = application.slice(4);
-                    res.json({"success": true, "message": application``})
+                    delete application.apikey;
+                    res.json({"success": true, "message": application})
                 } else {
-                    res.json({"success": false, "message": "Access Denied"})  
+                    res.json({"success": false, "message": "Access Denied X-Code: 3"})  
                 }
             } else {
-                res.json({"success": false, "message": "Application not found."})
+                res.json({"success": false, "message": "Application not found. X-Code: 2"})
             }
         }
     });
