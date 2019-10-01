@@ -218,16 +218,17 @@ app.post('/create/question/:id/:jobid', [ensureAuthenticated, recaptcha.middlewa
             var questionId = short.generate();
 
             try {
-                db.set(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs.${jobid}.questions.${questionId}`, {
+                db.push(`users.${req.user.username.toLowerCase()}.applications.${appid}.jobs.${jobid}.questions`, {
                     question: name,
                     type: type,
                     id: questionId,
                     choices: choices
-                })
+                });
                 req.flash('success', 'Successfully created the job!');
                 res.redirect(redirectLink);   
-            } catch {
+            } catch(err) {
                 req.flash('error', 'An error occured while trying to create question');
+                console.error(err);
                 res.redirect(redirectLink);               
             }
         } else {

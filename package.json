@@ -33,6 +33,7 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "quick.db": "^7.0.0-b22",
+    "rethinkdb": "^2.3.3",
     "secret-key": "^1.4.2",
     "short-uuid": "^3.1.1",
     "uuid-apikey": "^1.4.3",

@@ -1,13 +1,25 @@
-const express = require('express');
-const app = express.Router();
-const Recaptcha = require('express-recaptcha').RecaptchaV2;
-const bcrypt = require('bcrypt');
-const db = require('quick.db');
-const passport = require('passport');
+// NPM Packages
+const express = require('express'); // Express
+
+const Recaptcha = require('express-recaptcha').RecaptchaV2; // Recaptcha
+
+const bcrypt = require('bcrypt'); // Bcrypt
+
+global.r = require('rethinkdb') // rethinkdb
+
+const passport = require('passport'); // passport
+
+// Connect
+r.connect({ host: 'localhost', port: 28015}, (err, conn) => {
+    if (err) {
+        throw(err);
+        console.log(err);
+    }
+})
 
 const ensureNotAuthenticated = require('../ensureAuth.js').ensureNotAuthenticated;
 
-db.set('users.uhteddy.admin', true)
+const app = express.Router();
 
 const initializePassport = require('../passport-config.js');
 initializePassport(passport, 

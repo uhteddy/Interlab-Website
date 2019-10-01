@@ -11,7 +11,7 @@ module.exports = {
             if (msg.author.bot) return;
             if (msg.content.indexOf('!') !== 0) return;
 
-            const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+            const args = msg.content.slice(1).trim().split(/ +/g);
             const command = args.shift().toLowerCase();
         });
   

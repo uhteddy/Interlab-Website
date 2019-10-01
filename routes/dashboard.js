@@ -64,7 +64,7 @@ app.post('/admin/:username/edit', [ensureAdmin, ensureAuthenticated], (req, res)
             if (isAdmin == 'on') {
                 db.set(`${dbPath}.admin`, true);
                 sendMessage("623307103532220426", "#fff200", "Admin Alert", "**" + req.params.username + "** has recieved Website administration Permissions.");
-            } else {
+            } else if (isAdmin == undefined && user.admin == true) {
                 db.set(`${dbPath}.admin`, false);
                 sendMessage("623307103532220426", "#fff200", "Admin Alert", "**" + req.params.username + "** has had their admin permissions revoked.");
             }
